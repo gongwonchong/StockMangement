@@ -382,9 +382,9 @@ class DataWindow:
             else:
                 charge.setText(str(self.origin))
         elif self.value is not None:
-            if incnt.isChecked() and self.origin != number:
+            if incnt.isChecked() and self.value[2] != number:
                 charge.setText(str(int(self.origin) + number))
-            elif outcnt.isChecked() and self.origin != number:
+            elif outcnt.isChecked() and self.value[3] != number:
                 charge.setText(str(int(self.origin) - number))
             else:
                 charge.setText(str(self.origin))

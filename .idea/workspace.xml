@@ -1,7 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="838a806e-adb4-4e50-ae4a-da1bd8e2e275" name="Default" comment="" />
+    <list default="true" id="838a806e-adb4-4e50-ae4a-da1bd8e2e275" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/StockManagement.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/StockManagement.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/bg.py" beforeDir="false" afterPath="$PROJECT_DIR$/bg.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/install.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,8 +22,11 @@
       <file leaf-file-name="main.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/main.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="19">
-              <caret line="1" selection-start-line="1" selection-end-line="1" />
+            <state relative-caret-position="152">
+              <caret line="8" column="25" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
+              <folding>
+                <element signature="e#0#10#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -23,8 +34,8 @@
       <file leaf-file-name="bg.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/bg.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="171">
-              <caret line="152" column="22" lean-forward="true" selection-start-line="152" selection-start-column="22" selection-end-line="152" selection-end-column="22" />
+            <state relative-caret-position="263">
+              <caret line="386" column="46" lean-forward="true" selection-start-line="386" selection-start-column="46" selection-end-line="386" selection-end-column="46" />
               <folding>
                 <element signature="e#0#29#0" expanded="true" />
               </folding>
@@ -87,6 +98,9 @@
       <replace>QMessageBox.Ok</replace>
     </replaceStrings>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
@@ -106,17 +120,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <expand>
-            <path>
-              <item name="Root" type="cbb8eebc:String" user="Root" />
-              <item name="StockManagement" type="cbb8eebc:String" user="StockManagement" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -132,10 +135,22 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <expand>
+            <path>
+              <item name="Root" type="cbb8eebc:String" user="Root" />
+              <item name="StockMangement" type="cbb8eebc:String" user="StockMangement" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="com.intellij.ide.scratch.LRUPopupBuilder$2/Languages" value="Python" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
   <component name="RunDashboard">
@@ -194,13 +209,13 @@
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Event Log" order="7" side_tool="true" />
-      <window_info anchor="bottom" id="Version Control" order="7" show_stripe_button="false" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
       <window_info anchor="bottom" id="Python Console" order="7" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.32731137" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32659575" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Favorites" order="2" side_tool="true" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3995749" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.39893618" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="right" id="Commander" order="0" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
@@ -214,6 +229,84 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="152">
+          <caret line="8" column="25" lean-forward="true" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bg.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1159">
+          <caret line="61" column="26" selection-start-line="61" selection-start-column="26" selection-end-line="61" selection-end-column="26" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/pymysql/err.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1976">
+          <caret line="106" selection-start-line="106" selection-end-line="106" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/pymysql/err.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1976">
+          <caret line="106" selection-start-line="106" selection-end-line="106" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bg.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="608">
+          <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="19">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/venv/Lib/site-packages/pymysql/err.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1976">
+          <caret line="106" selection-start-line="106" selection-end-line="106" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bg.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2888">
+          <caret line="152" column="22" lean-forward="true" selection-start-line="152" selection-start-column="22" selection-end-line="152" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#29#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="19">
@@ -305,15 +398,18 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/main.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        <state relative-caret-position="152">
+          <caret line="8" column="25" selection-start-line="8" selection-start-column="25" selection-end-line="8" selection-end-column="25" />
+          <folding>
+            <element signature="e#0#10#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/bg.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="152" column="22" lean-forward="true" selection-start-line="152" selection-start-column="22" selection-end-line="152" selection-end-column="22" />
+        <state relative-caret-position="263">
+          <caret line="386" column="46" lean-forward="true" selection-start-line="386" selection-start-column="46" selection-end-line="386" selection-end-column="46" />
           <folding>
             <element signature="e#0#29#0" expanded="true" />
           </folding>
