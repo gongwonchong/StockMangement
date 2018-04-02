@@ -82,6 +82,7 @@ class MainWindow:
         menu.addAction("수정", lambda: self.moddata(root, self.idx))
         menu.addAction("삭제", lambda: self.deldata(root))
         menu.addAction("품목 관리", lambda: self.showproduct(root))
+        menu.addAction("전체 조회", lambda: self.refresh(self.getalldata()))
         grid.addWidget(menu, 0, 0, 1, 3)
 
         # 시작일
@@ -110,7 +111,7 @@ class MainWindow:
         table = QTreeView()
         table.setModel(self.model)
         for i in range(0, 6):
-            table.header().resizeSection(i, 300)
+            table.header().resizeSection(i, root.size().width() // 6 + 200)
         # 선택 이벤트
         table.selectionModel().selectionChanged.connect(lambda: self.onselected(table.selectionModel()))
         grid.addWidget(table, 2, 0, 1, 3)
@@ -118,10 +119,12 @@ class MainWindow:
         root.showMaximized()
 
     # 데이터 받아서 모델에 삽입
-    def refresh(self):
+    def refresh(self, table):
         self.model.removeRows(0, self.model.rowCount())
-        self.origin = self.getdata()
-        # 데이터가 있으면 모델에 삽입
+        # 데이터를 원소스에 저장
+        # 모델은 원소스 순서대로 저장됨
+        self.origin = table
+        # 데이터가 있으면 모델에 삽입 (모델은 표의 실제 데이터)
         if len(self.origin) != 0:
             for row in self.origin:
                 t = list()
@@ -134,7 +137,7 @@ class MainWindow:
                 self.model.appendRow(t)
             self.model.setColumnCount(len(self.origin[0]) - 1)
 
-    # 선택 이벤트 핸들링
+    # 선택 이벤트 핸들링 만약 선택되면 선택값의 인덱스를 저장
     def onselected(self, model):
         if model.hasSelection():
             self.idx = model.selectedIndexes()[0].row()
@@ -143,19 +146,24 @@ class MainWindow:
 
     def viewdata(self, sdate, edate):
         # 날짜 변경하고 조회
-        self.chdate(sdate.currentDate().toPyDate(), edate.currentDate().toPyDate())
-        self.refresh()
+        self.chdate(sdate.toPyDate(), edate.toPyDate())
+        self.refresh(self.getdatabydate())
 
     def chdate(self, sdate, edate):
         self.startdate = sdate
         self.enddate = edate
 
-    def getdata(self):
+    def getdatabydate(self):
         # 데이터 얻기
-        sql = "select product_date, name, incnt, outcnt, person, note, id from product_table where product_date >= '"
-        sql += self.startdate.strftime('%Y-%m-%d') + "' and product_date <= '" + self.enddate.strftime('%Y-%m-%d')
-        sql += " order by id asc"
-        return __data__.select(sql + "'")
+        sql = "select product_date, name, incnt, outcnt, person, note, id from product_table where product_date " \
+              "between cast('{}' as date) and cast('{}' as date) order by product_date asc, id asc"\
+            .format(self.startdate.strftime('%Y-%m-%d'), self.enddate.strftime('%Y-%m-%d'))
+        return __data__.select(sql)
+
+    def getalldata(self):
+        sql = "select product_date, name, incnt, outcnt, person, note, id from product_table order by product_date asc, " \
+              "id asc"
+        return __data__.select(sql)
 
     # 데이터 삭제
     def deldata(self, root):
@@ -180,6 +188,7 @@ class MainWindow:
             msg.information(root, "완료", "데이터를 삭제했습니다.", QMessageBox.Ok)
 
     # 데이터 수정창 띄우기
+    #
     def moddata(self, master, idx):
         if self.idx == -1:
             QMessageBox().warning(master, "데이터 오류", "수정할 데이터를 선택하지 않았습니다.", QMessageBox.Ok)
@@ -205,17 +214,7 @@ class DataWindow:
         # 처음 전체 잔량
         self.origin = 0
         self.setui(master)
-        # 저장할 값
-        self.value = value
 
-    # 일자: [                    ]
-    # 품목: [                    ]
-    # 수량: [    ] ㅇ 입고 ㅇ 출고
-    # 잔량: 0
-    # 불출자: [                  ]
-    # 비고:
-    #
-    # [             확인          ]
     # label = [일자, 품목, 수량, 잔량, 0, 불출자, 비고]
     # vart = [QDateEdit(일자), QComboBox(품목), QRadioButton(입고), QRadioButton(출고), QSpinBox(수량),
     # , QLineEdit(불출자), QTextEdit(비고)]
@@ -259,11 +258,13 @@ class DataWindow:
 
         label.append(QLabel(str(self.origin)))
         grid.addWidget(label[4], 3, 1, 1, 3)
-        vart[1].currentTextChanged.connect(lambda:self.setcharge(vart[1].currentText(),
-                                                                 vart[2], vart[3], label[4], vart[4].value()))
+        vart[4].valueChanged.connect(lambda: self.getcharge(vart[2], vart[3], label[4], vart[4].value()))
         vart[2].toggled.connect(lambda: self.getcharge(vart[2], vart[3], label[4], vart[4].value()))
         vart[3].toggled.connect(lambda: self.getcharge(vart[2], vart[3], label[4], vart[4].value()))
-        vart[4].valueChanged.connect(lambda: self.getcharge(vart[2], vart[3], label[4], vart[4].value()))
+        vart[1].currentTextChanged.connect(lambda: self.setcharge(vart[2], vart[3], vart[1].currentText(), label[4],
+                                                                  vart[4].value(), vart[0].date().toPyDate()))
+        vart[0].dateChanged.connect(lambda: self.setcharge(vart[2], vart[3], vart[1].currentText(), label[4],
+                                                           vart[4].value(), vart[0].date().toPyDate()))
 
         label.append(QLabel("불출자: "))
         grid.addWidget(label[5], 4, 0)
@@ -295,7 +296,6 @@ class DataWindow:
             elif self.value[3] == 0:
                 vart[4].setValue(self.value[2])
                 vart[2].setChecked(True)
-            label[4].setText(str(self.origin))
 
             vart[5].setText(self.value[4])
             vart[6].setPlainText(self.value[5])
@@ -309,7 +309,7 @@ class DataWindow:
 
     def confirmaction(self, input, charge, root, mode):
         result = list()
-        result.append(input[0].date().currentDate().toPyDate()) #0
+        result.append(input[0].date().toPyDate()) #0
         result.append(str(input[1].currentText())) #1
         result.append(input[2].isChecked()) #2 입고
         result.append(input[3].isChecked()) #3 츨고
@@ -358,46 +358,40 @@ class DataWindow:
         else:
             # 입고, 만약 출고에서 입고로 바뀌면 출고가 0이 됨
             if result[2]:
-                sql = "update product_table set product_date = '{}', name = '{}', incnt = '{}'," \
+                sql = "update product_table set product_date = '{}', name = '{}', person = '{}', incnt = '{}'," \
                       " outcnt = '0', note = '{}' where id = '{}'" \
                     .format(product_date, result[1], result[5], result[4], result[6], self.value[-1])
                 __data__.other(sql)
-                msg.information(root, "완료", "데이터를 입력했습니다.", QMessageBox.Ok)
+                msg.information(root, "완료", "데이터를 수정했습니다.", QMessageBox.Ok)
                 root.close()
             # 출고, 만약 입고에서 출고로 바뀌면 입고가 0이 됨
             elif result[3]:
-                sql = "update product_table set product_date = '{}', name = '{}', outcnt = '{}'," \
+                sql = "update product_table set product_date = '{}', name = '{}', person = '{}', outcnt = '{}'," \
                       " incnt = '0', note = '{}' where id = '{}'"\
                     .format(product_date, result[1], result[5], result[4], result[6], self.value[-1])
                 __data__.other(sql)
-                msg.information(root, "완료", "데이터를 입력했습니다.", QMessageBox.Ok)
+                __data__.other(sql)
+                msg.information(root, "완료", "데이터를 수정했습니다.", QMessageBox.Ok)
                 root.close()
 
     def getcharge(self, incnt, outcnt, charge, number):
-        if self.value is None:
-            if incnt.isChecked():
-                charge.setText(str(int(self.origin) + number))
-            elif outcnt.isChecked():
-                charge.setText(str(int(self.origin) - number))
-            else:
-                charge.setText(str(self.origin))
-        elif self.value is not None:
-            if incnt.isChecked() and self.value[2] != number:
-                charge.setText(str(int(self.origin) + number))
-            elif outcnt.isChecked() and self.value[3] != number:
-                charge.setText(str(int(self.origin) - number))
-            else:
-                charge.setText(str(self.origin))
+        # 입고면 원값 + 입력 출고면 원값 - 입력
+        if incnt.isChecked():
+            charge.setText(str(int(self.origin) + number))
+        elif outcnt.isChecked():
+            charge.setText(str(int(self.origin) - number))
 
-    def setcharge(self, text, incnt, outcnt, charge, number):
+    def setcharge(self, incnt, outcnt, text, charge, number, datevalue):
+        # 첫 잔량 설정
         if self.value is None:
             self.origin = checkvar(__data__.select("select sum(incnt) - sum(outcnt) from product_table where "
-                                                   "name = '{}'".format(text))[0][0])
+                                                   "product_date <= cast('{}' as date) and name = '{}'"
+                                                   .format(datevalue, text))[0][0])
         else:
-            self.origin = checkvar(__data__.select("select sum(incnt) - sum(outcnt) from product_table where id <= '{}'"
-                                                   " and name = '{}'".format(self.value[-1], text))[0][0])
+            self.origin = checkvar(__data__.select("select sum(incnt) - sum(outcnt) from product_table where "
+                                                   "product_date <= cast('{}' as date) and name = '{}' and id < '{}'"
+                                                   .format(datevalue, text, self.value[-1]))[0][0])
         self.getcharge(incnt, outcnt, charge, number)
-
 
 class ProductWindow:
     def __init__(self, top):
@@ -408,7 +402,8 @@ class ProductWindow:
         self.setui(master)
 
     def setui(self, root):
-        root.setFixedSize(1200, 900)
+        root.setFixedSize(700, 700)
+        root.setModal(True)
         root.setWindowTitle("품목 관리")
         grid = QGridLayout(root)
 
@@ -431,8 +426,8 @@ class ProductWindow:
 
         table = QTreeView()
         table.setModel(self.model)
-        table.header().resizeSection(0, 500)
-        table.header().resizeSection(1, 500)
+        table.header().resizeSection(0, root.size().width() // 2)
+        table.header().resizeSection(1, root.size().width() // 2)
         table.selectionModel().selectionChanged.connect(lambda: self.onselected(table.selectionModel(), rm, update))
         grid.addWidget(table, 0, 0, 1, 3)
 
@@ -480,7 +475,17 @@ class ProductWindow:
         ProductDataWindow(root, self.refresh, self.origin[self.idx])
 
     def deldata(self, root):
-        detailed = "품목: " + self.origin[self.idx][0] + "\n" + "설명: " + self.origin[self.idx][1]
+        effectedcontent = "\n삭제될 수 있는 데이터: \n"
+        sql = "select product_date, name, incnt, outcnt, person, note from product_table where name = '{}'".\
+            format(self.origin[self.idx][0])
+        sqlresult = __data__.select(sql)
+        if sqlresult is not None:
+            for t in sqlresult:
+                effectedcontent += "\n일시 : {}\n품목 : {}\n입고 : {}\n출고 : {}\n불출자 : {}".\
+                    format(t[0], t[1], t[2], t[3], t[4], t[5])
+        else:
+            effectedcontent += "없음"
+        detailed = "품목: " + self.origin[self.idx][0] + "\n" + "설명: " + self.origin[self.idx][1] + effectedcontent
         msg = QMessageBox()
         msg.setDetailedText(detailed)
         msg.setIcon(QMessageBox.Question)
@@ -490,6 +495,8 @@ class ProductWindow:
         t = msg.exec_()
         if t == QMessageBox.Yes:
             sql = "delete from product where name = '{}'".format(self.origin[self.idx][0])
+            __data__.other(sql)
+            sql = "delete from product_table where name = '{}'".format(self.origin[self.idx][0])
             __data__.other(sql)
             msg.information(root, "완료", "데이터를 삭제했습니다.", QMessageBox.Ok)
             self.refresh()
@@ -541,6 +548,33 @@ class ProductDataWindow:
             msg.warning(root, "품명", "품명을 입력하지 않았습니다", QMessageBox.Ok)
             name.setFocus()
         else:
+            # 품명 수정일경우
+            if self.value is not None and data[0] != self.value[0]:
+                effectedcontent = "\n변경될 수 있는 데이터: \n"
+                sql = "select product_date, name, incnt, outcnt, person, note from product_table where name = '{}'". \
+                    format(self.value[0])
+                sqlresult = __data__.select(sql)
+                if sqlresult is not None:
+                    for t in sqlresult:
+                        effectedcontent += "\n일시 : {}\n품목 : {}\n입고 : {}\n출고 : {}\n불출자 : {}". \
+                            format(t[0], t[1], t[2], t[3], t[4], t[5])
+                else:
+                    effectedcontent += "없음"
+                detailed = "품목: " + self.value[0] + "\n" + "설명: " + self.value[1] + effectedcontent
+                msg = QMessageBox()
+                msg.setDetailedText(detailed)
+                msg.setIcon(QMessageBox.Question)
+                msg.setStandardButtons(QMessageBox.Yes | QMessageBox.No)
+                msg.setWindowTitle("수정")
+                msg.setText("정말로 데이터를 수정하시겠습니까?")
+                t = msg.exec_()
+                if t == QMessageBox.Yes:
+                    sql = "update product_table set name = '{0}' where name = '{1}'".format(data[0], self.value[0])
+                    __data__.other(sql)
+                    sql = "delete from product where name = '{}'".format(self.value[0])
+                    __data__.other(sql)
+                elif t == QMessageBox.No:
+                    return
             sql = "replace into product (name, detail) values ('{0}', '{1}')".format(data[0], data[1])
             __data__.other(sql)
             self.refresh()
