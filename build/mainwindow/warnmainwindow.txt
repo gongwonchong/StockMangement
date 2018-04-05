@@ -13,7 +13,7 @@ missing module named vms_lib - imported by platform, C:\Users\badbr\PycharmProje
 missing module named termios - imported by tty, getpass, C:\Users\badbr\PycharmProjects\StockManagement\StockMangement\mainwindow.py
 missing module named grp - imported by shutil, tarfile, C:\Users\badbr\PycharmProjects\StockManagement\StockMangement\mainwindow.py
 missing module named pwd - imported by posixpath, shutil, tarfile, http.server, webbrowser, getpass, C:\Users\badbr\PycharmProjects\StockManagement\StockMangement\mainwindow.py, netrc
-missing module named _dummy_threading - imported by dummy_threading, C:\Users\badbr\PycharmProjects\StockManagement\StockMangement\mainwindow.py
 missing module named 'org.python' - imported by copy, C:\Users\badbr\PycharmProjects\StockManagement\StockMangement\mainwindow.py, xml.sax
+missing module named _dummy_threading - imported by dummy_threading, C:\Users\badbr\PycharmProjects\StockManagement\StockMangement\mainwindow.py
 missing module named ConfigParser - imported by pymysql.optionfile
 missing module named __builtin__ - imported by pymysql._compat
