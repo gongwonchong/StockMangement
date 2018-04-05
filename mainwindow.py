@@ -120,8 +120,9 @@ class MainWindow:
         if self.idx == -1:
             QMessageBox().warning(root, "데이터 오류", "삭제할 데이터를 선택하지 않았습니다.", QMessageBox.Ok)
             return
-        table = "select product_date, name, incnt, outcnt, person, note, id from product_table id =" + \
+        sql = "select product_date, name, incnt, outcnt, person, note, id from product_table where id = " + \
                 str(self.idxes[self.idx])
+        table = __data__.select(sql)
         # 삭제할 데이터 내용
         detailed = "일시: " + str(table[0][0]) + "\n" + "품목: " + table[0][1] + "\n" + "입고: " + str(table[0][2]) + \
                    "\n" + "출고: " + str(table[0][3]) + "\n" + "불출자: " + str(table[0][4]) + "\n비고: " + \

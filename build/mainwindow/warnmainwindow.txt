@@ -1,0 +1,19 @@
+missing module named resource - imported by posix, C:\Users\badbr\PycharmProjects\StockManagement\StockMangement\mainwindow.py
+missing module named posix - imported by os, C:\Users\badbr\PycharmProjects\StockManagement\StockMangement\mainwindow.py
+missing module named _posixsubprocess - imported by subprocess, C:\Users\badbr\PycharmProjects\StockManagement\StockMangement\mainwindow.py
+missing module named org - imported by pickle, C:\Users\badbr\PycharmProjects\StockManagement\StockMangement\mainwindow.py
+missing module named readline - imported by cmd, code, pdb, C:\Users\badbr\PycharmProjects\StockManagement\StockMangement\mainwindow.py
+excluded module named _frozen_importlib - imported by importlib, importlib.abc, C:\Users\badbr\PycharmProjects\StockManagement\StockMangement\mainwindow.py
+missing module named _frozen_importlib_external - imported by importlib._bootstrap, importlib, importlib.abc, C:\Users\badbr\PycharmProjects\StockManagement\StockMangement\mainwindow.py
+missing module named _winreg - imported by platform, C:\Users\badbr\PycharmProjects\StockManagement\StockMangement\mainwindow.py
+missing module named _scproxy - imported by urllib.request
+missing module named java - imported by platform, C:\Users\badbr\PycharmProjects\StockManagement\StockMangement\mainwindow.py
+missing module named 'java.lang' - imported by platform, C:\Users\badbr\PycharmProjects\StockManagement\StockMangement\mainwindow.py, xml.sax._exceptions
+missing module named vms_lib - imported by platform, C:\Users\badbr\PycharmProjects\StockManagement\StockMangement\mainwindow.py
+missing module named termios - imported by tty, getpass, C:\Users\badbr\PycharmProjects\StockManagement\StockMangement\mainwindow.py
+missing module named grp - imported by shutil, tarfile, C:\Users\badbr\PycharmProjects\StockManagement\StockMangement\mainwindow.py
+missing module named pwd - imported by posixpath, shutil, tarfile, http.server, webbrowser, getpass, C:\Users\badbr\PycharmProjects\StockManagement\StockMangement\mainwindow.py, netrc
+missing module named _dummy_threading - imported by dummy_threading, C:\Users\badbr\PycharmProjects\StockManagement\StockMangement\mainwindow.py
+missing module named 'org.python' - imported by copy, C:\Users\badbr\PycharmProjects\StockManagement\StockMangement\mainwindow.py, xml.sax
+missing module named ConfigParser - imported by pymysql.optionfile
+missing module named __builtin__ - imported by pymysql._compat
