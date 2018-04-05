@@ -1,4 +1,5 @@
 from pymysql import *
+from PyQt5.QtWidgets import *
 
 
 class productdb:

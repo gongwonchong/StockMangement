@@ -12,7 +12,6 @@ class ProductWindow:
         self.setui(master)
 
     def setui(self, root):
-        root.setFixedSize(700, 700)
         root.setModal(True)
         root.setWindowTitle("품목 관리")
         grid = QGridLayout(root)
@@ -36,8 +35,7 @@ class ProductWindow:
 
         table = QTreeView()
         table.setModel(self.model)
-        table.header().resizeSection(0, root.size().width() // 2)
-        table.header().resizeSection(1, root.size().width() // 2)
+        table.setSizeAdjustPolicy(QAbstractScrollArea.AdjustToContents)
         table.selectionModel().selectionChanged.connect(lambda: self.onselected(table.selectionModel(), rm, update))
         grid.addWidget(table, 0, 0, 1, 3)
 
@@ -150,6 +148,7 @@ class ProductDataWindow:
             vart[1].setPlainText(self.value[1])
 
         root.setLayout(grid)
+        root.adjustSize()
         root.show()
 
     def confirmAction(self, data, name, root):

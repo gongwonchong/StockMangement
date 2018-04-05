@@ -17,7 +17,6 @@ class DataWindow:
     # vart = [QDateEdit(일자), QComboBox(품목), QRadioButton(입고), QRadioButton(출고), QSpinBox(수량),
     # , QLineEdit(불출자), QTextEdit(비고)]
     def setui(self, root):
-        root.setFixedSize(500, 250)
         grid = QGridLayout(root)
         label = list()
         vart = list()
@@ -103,6 +102,8 @@ class DataWindow:
         grid.addWidget(confirm, 6, 0, 1, 4)
 
         root.setLayout(grid)
+        root.adjustSize()
+        root.setFixedSize(root.size())
         root.show()
 
     def confirmaction(self, input, charge, root, mode):
@@ -131,6 +132,13 @@ class DataWindow:
             msg.warning(root, "수량", "출고량이 잔량보다 많습니다", QMessageBox.Ok)
             input[4].setFocus()
             return
+        elif self.value is not None and result[2]:
+            sql = "select ((sum(incnt) - sum(outcnt)) - ({} - {})) > 0 from product_table".\
+                format(str(self.value[2]), str(input[4].value()))
+            if __data__.select(sql)[0][0] == 0:
+                msg.warning(root, "수량", "다른 행에서 출고량이 잔량보다 많아집니다.", QMessageBox.Ok)
+                input[4].setFocus()
+                return
         elif result[5] == "":
             msg.warning(root, "불출자", "불출자를 입력하지 않았습니다", QMessageBox.Ok)
             input[5].setFocus()
